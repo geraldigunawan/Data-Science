@@ -11,6 +11,8 @@ from scipy import stats
 
 #%%
 titanic_train_data.describe()
+#%%
+list(titanic_train_data)
 #%%w
 #number of survivors
 titanic_train_data[titanic_train_data['Survived'] == 1]['PassengerId'].count()
