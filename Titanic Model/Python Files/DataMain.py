@@ -5,7 +5,7 @@ Created on Sun Oct 14 14:12:11 2018
 
 @author: geraldigunawan
 
-Purpose: predict the survival of passengers abroad Titanic
+Purpose: predict the survival of passengers abroad Titanic ship
 """
 
 import pandas as pd
