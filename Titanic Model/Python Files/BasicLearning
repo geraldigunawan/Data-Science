@@ -33,8 +33,17 @@ s4
 df = pd.DataFrame({'id':s3,'info':s4})
 df
 #%%
-df2 = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),columns=['a', 'b', 'c'])
-df2
+df = pd.DataFrame([[1, 2], [3, 4]], columns=list('AB'))
+df
+#%%
+df2 = pd.DataFrame([[5, 6], [7, 8]], columns=list('AB'))
+df.append(df2,ignore_index=True)
+#%%
+df3 = pd.DataFrame([[1, 2, 3], [4, 5, 6], [7, 8, 9]],columns=list('ABC'))
+df3
+#%%
+df4 = pd.DataFrame([[2, 2, 3], [4, 5, 6],[np.nan,np.nan,np.nan]], columns=list('ABC'))
+df3.append(df4, ignore_index=True)
 #%%
 df2[0:3]
 # select the first, second and third rows from the surveys variable
