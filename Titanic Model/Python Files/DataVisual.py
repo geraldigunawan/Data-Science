@@ -12,6 +12,9 @@ from scipy import stats
 #%%
 titanic_train_data.describe()
 #%%
+##lambda funtion is python function
+titanic_train_data.apply(lambda x: sum(x.isnull()),axis=0)
+#%%
 list(titanic_train_data)
 #%%w
 #number of survivors

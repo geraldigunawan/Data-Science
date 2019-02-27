@@ -21,7 +21,7 @@ pd.set_option('display.expand_frame_repr', False)
 pd.set_option('display.max_colwidth', 10)
 pd.set_option('display.max_columns', 100)
 
-titanic_train_data = pd.read_csv('/Applications/MAMP/htdocs/Data-science/Data-Science-2/Titanic Model/Datasets/train.csv')
+titanic_train_data = pd.read_csv('/Applications/MAMP/htdocs/Data-Science/Titanic Model/Datasets/train.csv')
 train_data_copy = titanic_train_data.copy()
 #%% add additional columns to indicate columns with missing data
 def add_extra_column_to_indicate_missing_value(titanic_data):
