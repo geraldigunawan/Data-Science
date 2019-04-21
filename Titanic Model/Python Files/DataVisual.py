@@ -16,6 +16,8 @@ titanic_train_data.describe()
 titanic_train_data.apply(lambda x: sum(x.isnull()),axis=0)
 #%%
 list(titanic_train_data)
+#%%
+titanic_train_data.sum(axis=0)
 #%%w
 #number of survivors
 titanic_train_data[titanic_train_data['Survived'] == 1]['PassengerId'].count()

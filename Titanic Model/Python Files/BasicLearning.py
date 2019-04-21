@@ -11,10 +11,14 @@ import pandas as pd
 np.version.version
 #%% create dictionary
 d = {'name':'Geraldi','age':23,'uni':'University of Sydney'}
+#%%
+d
+#%%
 pd.Series(d)
 #%% create Series
-s = pd.Series([1,2,3,4.0,5,6,7], index=['a','b','c','d','e','f','g'])
+s = pd.Series([1,2,3,4.0,'ala',6,7], index=['a','b','c','d','e','f','g'])
 s
+#%%
 'g' in s
 #%%
 s.dtype
@@ -43,7 +47,16 @@ df3 = pd.DataFrame([[1, 2, 3], [4, 5, 6], [7, 8, 9]],columns=list('ABC'))
 df3
 #%%
 df4 = pd.DataFrame([[2, 2, 3], [4, 5, 6],[np.nan,np.nan,np.nan]], columns=list('ABC'))
-df3.append(df4, ignore_index=True)
+df4
+#%%
+result = df3.append(df4, ignore_index=True)
+result
+#%%
+s1 = pd.Series([np.nan, 2,np.nan], index =list('ABC'))
+result.append(s1, ignore_index=True)
+#%%
+df = pd.DataFrame(columns=['A'])
+df
 #%%
 df2[0:3]
 # select the first, second and third rows from the surveys variable
