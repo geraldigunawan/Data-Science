@@ -137,26 +137,40 @@ group=['Low','Average','High', 'Very high']
 train_original['Income_bin'] = pd.cut(df['ApplicantIncome'],bins,labels=group)
 Income_bin = pd.crosstab(train_original['Income_bin'],train_original['Loan_Status'])
 Income_bin.div(Income_bin.sum(1).astype(float), axis=0).plot(kind="bar", stacked=True)
+Income_bin
 plt.xlabel('ApplicantIncome')
 plt.ylabel('Percentage')
 plt.title('Loan approval based on applicant income categories')
 txt= 'It can be inferred that Applicant income does not affect the chances of loan approval which contradicts our hypothesis in which we assumed that if the applicant income is high the chances of loan approval will also be high.'
 plt.text(-0.5, -0.5, txt, ha='center')
 #%%
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+"""Find the mean income of people for which the loan has been approved vs the mean income of people for which the loan has not been approved"""
+train_original.groupby('Loan_Status')['CoapplicantIncome'].mean().plot.bar()
+#%%
+bins = [0,1000,3000,42000]
+group=['Low','Average','High']
+train_original['Coapplicant_income_bin'] = pd.cut(df['CoapplicantIncome'],bins,labels=group)
+Coapplicant_income_bin = pd.crosstab(train_original['Coapplicant_income_bin'],train_original['Loan_Status'])
+Coapplicant_income_bin.div(Coapplicant_income_bin.sum(1).astype(float), axis=0).plot(kind="bar", stacked=True)
+Coapplicant_income_bin
+plt.xlabel('CoapplicantIncome')
+plt.ylabel('Percentage')
+plt.title('Loan approval based on coapplicant income categories')
+txt= 'It can be inferred that lower coapplicant income has higher chance of loan approval, which is a bit odd. This could be because some coapplicants do not have income.'
+plt.text(-0.5, -0.5, txt, ha='center')
+#%% Combining applicant and coapplicant income
+train_original['CombinedIncome'] = train_original['ApplicantIncome'] + train_original['CoapplicantIncome']
+bins=[0,2500,4000,6000,81000]
+group=['Low','Average','High', 'Very high']
+train_original['Total_Income_bin'] = pd.cut(train_original['CombinedIncome'],bins,labels=group)
+Total_income_bin = pd.crosstab(train_original['Total_Income_bin'], train_original['Loan_Status'])
+Total_income_bin.div(Total_income_bin.sum(1).astype(float), axis = 0).plot(kind = "bar", stacked = True)
+plt.title('Loan approval based on total income of both applicant and coapplicant')
+plt.xlabel('Applicant + coapplicant income')
+plt.ylabel('Percentage')
+txt= 'After combining applicant and coapplicant income, it makes more sense now that lower income results to lower chance of loan approval'
+plt.text(-0.5, -0.5, txt, ha='center')
+#%%
 
 
 
