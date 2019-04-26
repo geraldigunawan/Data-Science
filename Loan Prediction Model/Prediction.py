@@ -27,6 +27,8 @@ y = train.Loan_Status
 #%%
 X.head()
 #%%
+X.columns
+#%%
 y.head()
 #%%
 X = pd.get_dummies(X)
@@ -52,4 +54,4 @@ submission['Loan_Status']=pred_test
 submission['Loan_ID']=test_original['Loan_ID']
 submission
 #%%
-pd.DataFrame(submission, columns=['Loan_ID','Loan_Status']).to_csv('logistic.csv',, index = False)
+pd.DataFrame(submission, columns=['Loan_ID','Loan_Status']).to_csv('logistic.csv', index = False)
