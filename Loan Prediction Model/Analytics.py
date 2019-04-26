@@ -34,11 +34,6 @@ train_original['CoapplicantIncome'].count()
 #%%
 train_original[train_original['CoapplicantIncome'] == 0.0]['CoapplicantIncome'].count()
 #%%
-"""check missing values"""
-train_original.isnull().sum()
-train_original[train_original['Gender'].isnull()]['Loan_ID']
-train_original[train_original['Gender'].isnull()]['Gender'].count()
-#%%
 gender_married_table = pd.crosstab(train_original['Gender'], train_original['Married'])
 gender_married_table
 #%%
@@ -120,7 +115,7 @@ LoanApproval_by_employment = pd.crosstab(train_original['Self_Employed'],train_o
 LoanApproval_by_employment.div(LoanApproval_by_employment.sum(1).astype(float), axis=0).plot.bar(stacked= True, title = 'Loan Approval based on employment')
 #%%
 """Check if loan approval has direct correlation over credit history"""
-LoanApproval_by_credit_history = pd.crosstab(train_original['Credit_History'],train_original['Loan_Status'])
+LoanApproval_by_credit_history = pd.crosstab(train_original['Credite_History'],train_original['Loan_Status'])
 LoanApproval_by_credit_history.div(LoanApproval_by_credit_history.sum(1).astype(float), axis=0).plot.bar(stacked= True, title = 'Loan Approval based on credit history')
 #%%
 """Check if loan approval has direct correlation over property area"""
@@ -171,16 +166,69 @@ plt.ylabel('Percentage')
 txt= 'After combining applicant and coapplicant income, it makes more sense now that lower income results to lower chance of loan approval'
 plt.text(-0.5, -0.5, txt, ha='center')
 #%%
-
-
-
-
-
-
-
-
-
-
-
-
-
+train_original.columns
+#%%
+train_original = train_original.drop(['Income_bin', 'Coapplicant_income_bin', 'CombinedIncome',
+       'Total_Income_bin'], axis = 1)
+#%%
+train_original['Dependents'].replace('3+',3, inplace= True)
+train_original['Loan_Status'].replace('N', 0,inplace=True)
+train_original['Loan_Status'].replace('Y', 1,inplace=True)
+train_original['Loan_Status'].unique()
+#%%
+matrix = train_original.corr()
+matrix
+plt.subplots(figsize=(5.0, 5.0))
+sns.heatmap(matrix, vmax=.8, square=True, cmap="BuPu");
+#%%
+"""check missing values"""
+train_original.isnull().sum()
+#%%
+train_original['Married'].loc[(train_original['Loan_ID'] == 'LP001357') | (train_original['Loan_ID'] == 'LP001760') | (train_original['Loan_ID'] == 'LP002393')]
+#%%
+train_original['Married'].mode()
+#%%
+"""impute train data with mode"""
+train_original['Gender'].fillna(train_original['Gender'].mode()[0], inplace=True) 
+train_original['Married'].fillna(train_original['Married'].mode()[0], inplace=True) 
+train_original['Dependents'].fillna(train_original['Dependents'].mode()[0], inplace=True)
+train_original['Self_Employed'].fillna(train_original['Self_Employed'].mode()[0], inplace=True)
+train_original['Credit_History'].fillna(train_original['Credit_History'].mode()[0], inplace=True)
+#%%
+train_original.head()
+#%%
+train_original['Loan_Amount_Term'].value_counts()
+train_original['Loan_Amount_Term'].fillna(train_original['Loan_Amount_Term'].mode()[0], inplace=True)
+#%%
+train_original['LoanAmount'].value_counts()
+#%%
+train_original['LoanAmount'].fillna(train_original['LoanAmount'].median(), inplace=True)
+#%%
+test_original.head()
+test_original.isnull().sum()
+#%%
+"""impute test data with mode or median"""
+test_original['Gender'].fillna(test_original['Gender'].mode()[0], inplace=True) 
+test_original['Dependents'].fillna(test_original['Dependents'].mode()[0], inplace=True)
+test_original['Self_Employed'].fillna(test_original['Self_Employed'].mode()[0], inplace=True)
+test_original['Credit_History'].fillna(test_original['Credit_History'].mode()[0], inplace=True)
+test_original['Loan_Amount_Term'].fillna(test_original['Loan_Amount_Term'].mode()[0], inplace=True)
+test_original['LoanAmount'].fillna(test_original['LoanAmount'].median(), inplace=True)
+#%%
+train_original['LoanAmount'].value_counts()
+#%%
+train_original['LoanAmount'].plot(kind ='hist', bins = 20, grid = True)
+#%%
+"""treating outlier"""
+train_original['LoanAmount_log'] = np.log(train_original['LoanAmount'])
+#%%
+train_original['LoanAmount_log'].hist(bins=20)
+#%%
+test_original['LoanAmount'].plot(kind ='hist', bins = 20, grid = True)
+#%%
+test_original['LoanAmount_log'] = np.log(test_original['LoanAmount'])
+test_original['LoanAmount_log'].plot(kind ='hist', bins = 20, grid = True)
+#%%
+train_original.isnull().sum()
+#%%
+test_original.isnull().sum()
