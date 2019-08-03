@@ -23,14 +23,15 @@ loan_test_data = pd.read_csv('/Applications/MAMP/htdocs/Data-Science/Loan Predic
 train_original=loan_train_data.copy() 
 test_original=loan_test_data.copy()
 #%%
-"""Briefly describe datasets"""
+"""Brief ly describe datasets"""
 list(train_original)
 train_original.columns
+#%%
 train_original.head()
 train_original.shape
 train_original.dtypes
 #%%
-train_original['CoapplicantIncome'].count()
+train_original['Gender'].count()
 #%%
 train_original[train_original['CoapplicantIncome'] == 0.0]['CoapplicantIncome'].count()
 #%%
@@ -40,7 +41,9 @@ gender_married_table
 gender_married_table.dropna().plot.bar(title = 'Marriage based gender', stacked = True, figsize = (4,4))
 #%%
 train_original[train_original['Gender'] == 'Male']['Gender'].count()
+#%%
 train_original[train_original['Gender'] == 'Female']['Gender'].count()
+#%%
 train_original['Gender'].fillna('Male', inplace = True)
 #%%
 train_original['Loan_Status'].value_counts()
@@ -78,7 +81,9 @@ train_original.boxplot(column='CoapplicantIncome', by = 'Education')
 #%%
 df=train_original.dropna() 
 df.isnull().any()
+#%%
 df.shape
+#%%
 sns.distplot(df['LoanAmount']);
 sns.distplot(df['LoanAmount'], kde = False ,hist = True); 
 sns.distplot(df['LoanAmount'], kde = True ,hist = False); 
@@ -95,6 +100,7 @@ Hypothesis:
 """Check if loan approval has direct correlation over gender"""
 LoanApproval_by_gender = pd.crosstab(train_original['Gender'],train_original['Loan_Status'])
 LoanApproval_by_gender
+#%%
 LoanApproval_by_gender.div(LoanApproval_by_gender.sum(1).astype(float), axis=0)
 LoanApproval_by_gender.div(LoanApproval_by_gender.sum(1).astype(float), axis=0).plot.bar(stacked= True, title = 'Loan Approval based on gender')
 #%%
@@ -126,7 +132,6 @@ plt.text(-0.5,-0.5, txt)
 #%%
 """Find the mean income of people for which the loan has been approved vs the mean income of people for which the loan has not been approved"""
 train_original.groupby('Loan_Status')['ApplicantIncome'].mean().plot.bar()
-
 bins=[0,2500,4000,6000,81000]
 group=['Low','Average','High', 'Very high']
 train_original['Income_bin'] = pd.cut(df['ApplicantIncome'],bins,labels=group)

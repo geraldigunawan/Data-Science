@@ -28,13 +28,19 @@ s2
 #%%
 s2[1]
 #%%
-s3 = pd.Series(np.array(['a','b','c']), index=['x','y','z'])
+s3 = pd.Series(np.array(['a','b','c']))
 s3
 #%%
-s4 = pd.Series({'x':'Geraldi','y':23,'z':'University of Sydney'})
+s4 = pd.Series(['Geraldi',23,'University of Sydney'])
 s4
 #%%
-df = pd.DataFrame({'id':s3,'info':s4})
+dff = pd.DataFrame({'id':s3, 'value':s4})
+dff
+#%%
+df = pd.DataFrame([s3,s4]).transpose()
+df
+#%%
+df.columns = ['Id','Info']
 df
 #%%
 df = pd.DataFrame([[1, 2], [3, 4]], columns=list('AB'))
@@ -67,3 +73,16 @@ df2[-1:]
 df2.iloc[0:3,1:2]
 #%%
 df2.iloc[0:2,2:3]
+
+#%%Converting dict to series of dataframe
+data_dict = {'Name' : 'Andy', 'Age' : 24, 'Uni' : 'University of Sydney'}
+data_dict
+#%%
+data_series = pd.Series(data_dict)
+data_series
+#%%
+df = pd.DataFrame.from_dict(data_dict)
+df
+#%%
+df = pd.DataFrame(data_series).transpose()
+df
