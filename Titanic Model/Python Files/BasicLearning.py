@@ -58,6 +58,8 @@ df4
 result = df3.append(df4, ignore_index=True)
 result
 #%%
+result.isnull()
+#%%
 s1 = pd.Series([np.nan, 2,np.nan], index =list('ABC'))
 result.append(s1, ignore_index=True)
 #%%
